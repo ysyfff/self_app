@@ -35,24 +35,26 @@ class WipeOutState extends State<WipeOut> {
   final TextEditingController _dateController = TextEditingController(
       text: DateFormat('yyyy-MM-dd').format(DateTime.now()));
 
+  // SingingCharacter type = SingingCharacter.eat;
+
   @override
   Widget build(BuildContext context) {
     // 更新报销类型
     void updateType(a) {
       print(a);
-      setState(() {
-        type = a;
-      });
+      // setState(() {
+      //   type = a;
+      // });
     }
 
-    void updateList()async{
+    void updateList() async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       setState(() {
         list = prefs.getStringList(type);
       });
     }
 
-    Future.delayed(Duration(microseconds: 1000), (){
+    Future.delayed(Duration(microseconds: 1000), () {
       updateList();
     });
 
@@ -62,22 +64,6 @@ class WipeOutState extends State<WipeOut> {
         ),
         body: Column(
           children: <Widget>[
-            Row(children: <Widget>[
-              Container(
-                  margin: const EdgeInsets.all(5),
-                  child: RaisedButton(
-                    onPressed: () {
-                      updateType('eat');
-                    },
-                    child: const Text('餐补2'),
-                  )),
-              RaisedButton(
-                onPressed: () {
-                  updateType('car');
-                },
-                child: const Text('打车'),
-              )
-            ]),
             _buildEnterForm()
           ],
         ));
@@ -85,9 +71,35 @@ class WipeOutState extends State<WipeOut> {
 
   Widget _buildEnterForm() {
     var textShown = list == null ? '' : list.join('\n');
+    var _handleTypeChange = (type) {
+      print(type);
+      setState(() {
+        type = type;
+      });
+    };
     return Column(
       children: <Widget>[
         Text(type),
+        Row(
+          children: <Widget>[
+            Radio(
+              groupValue: type,
+              value: 'eat',
+              onChanged: (v) {
+                _handleTypeChange(v);
+              },
+            ),
+            Text('餐饮'),
+            Radio(
+              groupValue: type,
+              value: 'car',
+              onChanged: (v) {
+                _handleTypeChange(v);
+              },
+            ),
+            Text('打车')
+          ],
+        ),
         TextField(
           controller: _controller,
           decoration: InputDecoration(hintText: '请输入金额', labelText: '金额'),
@@ -115,7 +127,7 @@ class WipeOutState extends State<WipeOut> {
           decoration: InputDecoration(hintText: '请选择时间', labelText: '时间'),
         ),
         RaisedButton(
-          child: Text('提交3'),
+          child: Text('提交'),
           onPressed: () async {
             SharedPreferences prefs = await SharedPreferences.getInstance();
             final date = _dateController.text;
@@ -129,7 +141,7 @@ class WipeOutState extends State<WipeOut> {
             stringList.add(newStringItem);
             await prefs.setStringList(type, stringList);
             setState(() {
-              list =stringList;
+              list = stringList;
             });
             // updateList();
           },

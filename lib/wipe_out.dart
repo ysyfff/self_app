@@ -29,7 +29,7 @@ class WipeOut extends StatefulWidget {
 // }
 
 class WipeOutState extends State<WipeOut> {
-  var type = 'eat';
+  var _radioValue = 'eat';
   var list = [];
   final TextEditingController _controller = TextEditingController();
   final TextEditingController _dateController = TextEditingController(
@@ -50,7 +50,7 @@ class WipeOutState extends State<WipeOut> {
     void updateList() async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       setState(() {
-        list = prefs.getStringList(type);
+        list = prefs.getStringList(_radioValue);
       });
     }
 
@@ -71,33 +71,31 @@ class WipeOutState extends State<WipeOut> {
 
   Widget _buildEnterForm() {
     var textShown = list == null ? '' : list.join('\n');
-    var _handleTypeChange = (type) {
-      print(type);
+    void _handleTypeChange(type) {
+      print(_radioValue);
       setState(() {
-        type = type;
+        _radioValue = type;
       });
     };
     return Column(
       children: <Widget>[
-        Text(type),
+        Text(_radioValue),
         Row(
           children: <Widget>[
             Radio(
-              groupValue: type,
+              // title: Text('餐饮'),
               value: 'eat',
-              onChanged: (v) {
-                _handleTypeChange(v);
-              },
+              groupValue: _radioValue,
+              onChanged: _handleTypeChange,
             ),
             Text('餐饮'),
             Radio(
-              groupValue: type,
+              // title: Text('打车'),
               value: 'car',
-              onChanged: (v) {
-                _handleTypeChange(v);
-              },
+              groupValue: _radioValue,
+              onChanged:_handleTypeChange,
             ),
-            Text('打车')
+            Text('打车'),
           ],
         ),
         TextField(
@@ -134,12 +132,12 @@ class WipeOutState extends State<WipeOut> {
             final money = _controller.text;
             var newStringItem = '${date},${money}';
 
-            var stringList = prefs.getStringList(type);
+            var stringList = prefs.getStringList(_radioValue);
             if (stringList == null) {
               stringList = [];
             }
             stringList.add(newStringItem);
-            await prefs.setStringList(type, stringList);
+            await prefs.setStringList(_radioValue, stringList);
             setState(() {
               list = stringList;
             });

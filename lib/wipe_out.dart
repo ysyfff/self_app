@@ -5,6 +5,49 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 
+enum SingingCharacter { lafayette, jefferson }
+
+class Test extends StatefulWidget {
+  @override
+  TestState createState() => new TestState();
+}
+
+class TestState extends State<Test> {
+  SingingCharacter _character = SingingCharacter.lafayette;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(title: Text('测试')),
+        body: Column(
+          children: <Widget>[
+            RadioListTile<SingingCharacter>(
+              title: const Text('Lafayette'),
+              value: SingingCharacter.lafayette,
+              groupValue: _character,
+              onChanged: (SingingCharacter value) {
+                setState(() {
+                  _character = value;
+                });
+              },
+            ),
+            RadioListTile<SingingCharacter>(
+              title: const Text('Thomas Jefferson'),
+              value: SingingCharacter.jefferson,
+              groupValue: _character,
+              onChanged: (SingingCharacter value) {
+                setState(() {
+                  _character = value;
+                });
+              },
+            ),
+          ],
+        ));
+  }
+
+  Widget _buildTest() {}
+}
+
 class WipeOut extends StatefulWidget {
   @override
   WipeOutState createState() => new WipeOutState();
@@ -63,9 +106,7 @@ class WipeOutState extends State<WipeOut> {
           title: const Text('报销'),
         ),
         body: Column(
-          children: <Widget>[
-            _buildEnterForm()
-          ],
+          children: <Widget>[_buildEnterForm()],
         ));
   }
 
@@ -76,7 +117,9 @@ class WipeOutState extends State<WipeOut> {
       setState(() {
         _radioValue = type;
       });
-    };
+    }
+
+    ;
     return Column(
       children: <Widget>[
         Text(_radioValue),
@@ -93,7 +136,7 @@ class WipeOutState extends State<WipeOut> {
               // title: Text('打车'),
               value: 'car',
               groupValue: _radioValue,
-              onChanged:_handleTypeChange,
+              onChanged: _handleTypeChange,
             ),
             Text('打车'),
           ],

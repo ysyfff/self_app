@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
-import 'ysy_icons.dart';
-import 'wipe_out.dart';
+import 'src/fonts/ysy_icons.dart';
+import 'src/view/wipe_out.dart';
+import 'src/view/test.dart';
 
 void main() => runApp(new MyApp());
 
@@ -10,8 +11,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Startup Name Generator',
-      // home: new WipeOut(),
-      home: new Test(),
+      home: new WipeOut(),
+      // home: new Test(),
       theme: new ThemeData(
         primaryColor: Colors.white
       ),

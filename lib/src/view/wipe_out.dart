@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 import '../../widget/RadioTile.dart';
+import 'test.dart';
 
 enum SingingCharacter { lafayette, jefferson }
 
@@ -16,6 +17,7 @@ class WipeOut extends StatefulWidget {
 class WipeOutState extends State<WipeOut> {
   String _radioValue = 'eat';
   var list = [];
+  int _selectIndex = 1;
   final TextEditingController _controller = TextEditingController();
   final TextEditingController _dateController = TextEditingController(
       text: DateFormat('yyyy-MM-dd').format(DateTime.now()));
@@ -39,17 +41,35 @@ class WipeOutState extends State<WipeOut> {
       });
     }
 
+    void _onItemTapped(int index) {
+      setState(() {
+        _selectIndex = index;
+      });
+    }
+
     Future.delayed(Duration(microseconds: 1000), () {
       updateList();
     });
 
     return new Scaffold(
-        appBar: new AppBar(
-          title: const Text('报销'),
-        ),
-        body: Column(
-          children: <Widget>[_buildEnterForm()],
-        ));
+      appBar: new AppBar(
+        title: const Text('报销'),
+      ),
+      body: Column(
+        children: <Widget>[_buildEnterForm()],
+      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   items: <BottomNavigationBarItem>[
+      //     BottomNavigationBarItem(
+      //         icon: Icon(Icons.money_off), title: Text('报销')),
+      //     BottomNavigationBarItem(
+      //         icon: Icon(Icons.my_location), title: Text('测试'))
+      //   ],
+      //   currentIndex: _selectIndex,
+      //   fixedColor: Colors.greenAccent,
+      //   onTap: _onItemTapped,
+      // ),
+    );
   }
 
   Widget _buildEnterForm() {
@@ -67,32 +87,6 @@ class WipeOutState extends State<WipeOut> {
         Text(_radioValue),
         Row(
           children: <Widget>[
-            // Radio(
-            //   // title: Text('餐饮'),
-            //   value: 'eat',
-            //   groupValue: _radioValue,
-            //   onChanged: _handleTypeChange,
-            // ),
-            // Text('餐饮'),
-            // Radio(
-            //   // title: Text('打车'),
-            //   value: 'car',
-            //   groupValue: _radioValue,
-            //   onChanged: _handleTypeChange,
-            // ),
-            // Text('打车'),
-            // RadioListTile<String>(
-            //   title: const Text('eat'),
-            //   value: 'eat',
-            //   groupValue: _radioValue,
-            //   onChanged: _handleTypeChange,
-            // ),
-            // RadioListTile<String>(
-            //   title: const Text('car'),
-            //   value: 'car',
-            //   groupValue: _radioValue,
-            //   onChanged: _handleTypeChange,
-            // ),
             RadioTile(
               value: 'eat',
               groupValue: _radioValue,
@@ -106,10 +100,6 @@ class WipeOutState extends State<WipeOut> {
               onChanged: _handleTypeChange,
             )
           ],
-        ),
-        TextField(
-          controller: _controller,
-          decoration: InputDecoration(hintText: '请输入金额', labelText: '金额'),
         ),
         TextField(
           controller: _dateController,
@@ -132,6 +122,10 @@ class WipeOutState extends State<WipeOut> {
             });
           },
           decoration: InputDecoration(hintText: '请选择时间', labelText: '时间'),
+        ),
+        TextField(
+          controller: _controller,
+          decoration: InputDecoration(hintText: '请输入金额', labelText: '金额'),
         ),
         RaisedButton(
           child: Text('提交'),

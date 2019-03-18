@@ -22,17 +22,20 @@ class RadioTileState extends State<RadioTile> {
     return GestureDetector(
       onTap: () {
         widget.onChanged(widget.value);
+        print('hah');
       },
-      child: Row(
-        children: <Widget>[
-          Radio(
-            activeColor: Colors.green,
-            value: widget.value,
-            groupValue: widget.groupValue,
-            onChanged: widget.onChanged,
-          ),
-          Text(widget.label)
-        ],
+      child: Container(
+        child: Row(
+          children: <Widget>[
+            Radio(
+              activeColor: Colors.green,
+              value: widget.value,
+              groupValue: widget.groupValue,
+              onChanged: widget.onChanged,
+            ),
+            Text(widget.label)
+          ],
+        ),
       ),
     );
   }

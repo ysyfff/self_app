@@ -84,48 +84,58 @@ class WipeOutState extends State<WipeOut> {
     ;
     return Column(
       children: <Widget>[
-        Text(_radioValue),
-        Row(
-          children: <Widget>[
-            RadioTile(
-              value: 'eat',
-              groupValue: _radioValue,
-              label: '餐补',
-              onChanged: _handleTypeChange,
-            ),
-            RadioTile(
-              value: 'car',
-              groupValue: _radioValue,
-              label: '打车',
-              onChanged: _handleTypeChange,
-            )
-          ],
+        Container(
+          padding: EdgeInsets.only(top: 20,left: 10),
+          child: Row(
+            children: <Widget>[
+              RadioTile(
+                value: 'eat',
+                groupValue: _radioValue,
+                label: '餐补',
+                onChanged: _handleTypeChange,
+              ),
+              RadioTile(
+                value: 'car',
+                groupValue: _radioValue,
+                label: '打车',
+                onChanged: _handleTypeChange,
+              )
+            ],
+          ),
         ),
-        TextField(
-          controller: _dateController,
-          onTap: () async {
-            print('tap');
-            final DateTime picked = await showDatePicker(
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime(2019),
-                lastDate: DateTime.now(),
-                builder: (BuildContext context, Widget child) {
-                  return Theme(child: child, data: ThemeData.dark());
-                });
+        Container(
+          padding: EdgeInsets.only(left: 20, right: 20, bottom: 30),
+          child: Column(
+            children: <Widget>[
+              TextField(
+                controller: _dateController,
+                onTap: () async {
+                  print('tap');
+                  final DateTime picked = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2019),
+                      lastDate: DateTime.now(),
+                      builder: (BuildContext context, Widget child) {
+                        return Theme(child: child, data: ThemeData.dark());
+                      });
 
-            // DateTime dateTime = DateTime.now();
-            setState(() {
-              if (picked != null) {
-                _dateController.text = DateFormat('yyyy-MM-dd').format(picked);
-              }
-            });
-          },
-          decoration: InputDecoration(hintText: '请选择时间', labelText: '时间'),
-        ),
-        TextField(
-          controller: _controller,
-          decoration: InputDecoration(hintText: '请输入金额', labelText: '金额'),
+                  // DateTime dateTime = DateTime.now();
+                  setState(() {
+                    if (picked != null) {
+                      _dateController.text =
+                          DateFormat('yyyy-MM-dd').format(picked);
+                    }
+                  });
+                },
+                decoration: InputDecoration(hintText: '请选择时间', labelText: '时间'),
+              ),
+              TextField(
+                controller: _controller,
+                decoration: InputDecoration(hintText: '请输入金额', labelText: '金额'),
+              ),
+            ],
+          ),
         ),
         RaisedButton(
           child: Text('提交'),

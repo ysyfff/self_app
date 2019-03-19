@@ -28,10 +28,11 @@ class RadioTileState extends State<RadioTile> {
         child: Row(
           children: <Widget>[
             Radio(
-              activeColor: Colors.green,
+              // activeColor: Theme.of(context).primaryColor,
               value: widget.value,
               groupValue: widget.groupValue,
               onChanged: widget.onChanged,
+              materialTapTargetSize:MaterialTapTargetSize.shrinkWrap
             ),
             Text(widget.label)
           ],

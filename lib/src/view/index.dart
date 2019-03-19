@@ -17,6 +17,7 @@ class BottomNavigator extends StatefulWidget {
 class BottomNavigatorState extends State<BottomNavigator> {
   int _selectIndex = 1;
   void _onItemTapped(int index) {
+    print(index);
     setState(() {
       _selectIndex = index;
     });
@@ -25,16 +26,16 @@ class BottomNavigatorState extends State<BottomNavigator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _selectIndex == 1 ? WipeOut() : Test(),
+      body: _selectIndex == 0 ? WipeOut() : Test(),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-              icon: Icon(Icons.money_off), title: Text('1')),
+              icon: Icon(Icons.money_off), title: Text('报销')),
           BottomNavigationBarItem(
-              icon: Icon(Icons.bug_report), title: Text('2')),
+              icon: Icon(Icons.bug_report), title: Text('测试')),
         ],
         currentIndex: _selectIndex,
-        fixedColor: Colors.greenAccent,
+        // fixedColor: Theme.of(context).primaryColor,
         onTap: _onItemTapped,
       ),
     );

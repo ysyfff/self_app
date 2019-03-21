@@ -110,10 +110,10 @@ class WipeOutState extends State<WipeOut> {
               TextField(
                 // enabled: false,
                 enableInteractiveSelection: false,
-                // focusNode: false,
+                focusNode: FocusNode(),
                 controller: _dateController,
                 onTap: () async {
-                  FocusScope.of(context).requestFocus(new FocusNode());
+                  // FocusScope.of(context).requestFocus(new FocusNode());
                   print('tap');
                   final DateTime picked = await showDatePicker(
                       context: context,

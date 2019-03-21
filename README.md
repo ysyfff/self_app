@@ -26,3 +26,10 @@ samples, guidance on mobile development, and a full API reference.
 flutter urn
 ```
 # self_app
+
+## 知识点
+
+- RadioListTile只能用在Column中，Row中怎么办
+  - 实现RadioTile Widget配合onTap和widget引用来实现
+- TextField不支持readOnly属性
+  - 通过FocusScope和enableInteractiveSelection来实现

@@ -144,9 +144,14 @@ class WipeOutState extends State<WipeOut> {
         RaisedButton(
           child: Text('提交'),
           onPressed: () async {
+            
+            FocusScope.of(context).requestFocus(FocusNode()); //取消
             SharedPreferences prefs = await SharedPreferences.getInstance();
             final date = _dateController.text;
             final money = _controller.text;
+            setState((){
+              _controller.text = '';
+            });
             var newStringItem = '${date},${money}';
 
             var stringList = prefs.getStringList(_radioValue);

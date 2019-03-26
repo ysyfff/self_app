@@ -33,3 +33,6 @@ flutter urn
   - 实现RadioTile Widget配合onTap和widget引用来实现
 - TextField不支持readOnly属性
   - 通过FocusScope和enableInteractiveSelection来实现
+- 点击textinput以外的区域，keyboard dismiss
+  - 在body上加gestureCaptuer配合FocusScope来实现
+- flutter动画

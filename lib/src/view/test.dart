@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 // enum SingingCharacter { lafayette, jefferson }
@@ -13,10 +12,11 @@ class TestState extends State<Test> {
   var _character = 'car';
 
   void _handleRadio(String char) {
-    setState((){
+    setState(() {
       _character = char;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,9 +35,19 @@ class TestState extends State<Test> {
               groupValue: _character,
               onChanged: _handleRadio,
             ),
+            this._renderLogo()
           ],
         ));
   }
 
-  Widget _buildTest() {}
+  // 动画sample
+  _renderLogo() {
+    return Center(
+      child: Container(
+          margin: EdgeInsets.symmetric(vertical: 10),
+          height: 300,
+          width: 300,
+          child: FlutterLogo()),
+    );
+  }
 }

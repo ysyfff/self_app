@@ -26,7 +26,13 @@ class BottomNavigatorState extends State<BottomNavigator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _selectIndex == 0 ? WipeOut() : Test(),
+      body: GestureDetector(
+        onTap: () {
+          // 点击空白区域，隐藏键盘
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: _selectIndex == 0 ? WipeOut() : Test(),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(

@@ -85,7 +85,7 @@ class WipeOutState extends State<WipeOut> {
     return Column(
       children: <Widget>[
         Container(
-          padding: EdgeInsets.only(top: 20,left: 10),
+          padding: EdgeInsets.only(top: 20, left: 10),
           child: Row(
             children: <Widget>[
               RadioTile(
@@ -144,12 +144,11 @@ class WipeOutState extends State<WipeOut> {
         RaisedButton(
           child: Text('提交'),
           onPressed: () async {
-            
             FocusScope.of(context).requestFocus(FocusNode()); //取消
             SharedPreferences prefs = await SharedPreferences.getInstance();
             final date = _dateController.text;
             final money = _controller.text;
-            setState((){
+            setState(() {
               _controller.text = '';
             });
             var newStringItem = '${date},${money}';

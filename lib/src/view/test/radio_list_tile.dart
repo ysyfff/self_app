@@ -1,14 +1,14 @@
+/**
+ * RadioListTile只能用在Column中，不能用在Row中
+ */
 import 'package:flutter/material.dart';
 
-// enum SingingCharacter { lafayette, jefferson }
-
-class Test extends StatefulWidget {
+class TestRadioListTile extends StatefulWidget {
   @override
-  TestState createState() => new TestState();
+  _State createState() => _State();
 }
 
-class TestState extends State<Test> {
-  // SingingCharacter _character = SingingCharacter.lafayette;
+class _State extends State<TestRadioListTile> {
   var _character = 'car';
 
   void _handleRadio(String char) {
@@ -20,7 +20,9 @@ class TestState extends State<Test> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('测试')),
+        appBar: AppBar(
+          title: Text('测试RadioListTile'),
+        ),
         body: Column(
           children: <Widget>[
             RadioListTile<String>(
@@ -35,19 +37,7 @@ class TestState extends State<Test> {
               groupValue: _character,
               onChanged: _handleRadio,
             ),
-            this._renderLogo()
           ],
         ));
-  }
-
-  // 动画sample
-  _renderLogo() {
-    return Center(
-      child: Container(
-          margin: EdgeInsets.symmetric(vertical: 10),
-          height: 300,
-          width: 300,
-          child: FlutterLogo()),
-    );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'wipe_out.dart';
-import 'test.dart';
+import 'test/test.dart';
 import 'notebook.dart';
 
 class Index extends StatelessWidget {

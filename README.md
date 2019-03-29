@@ -17,8 +17,8 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Star对比
 - Star
-  - Flutter = 53,907 + 1869 = 55776
-  - React Native = 74,224 + 587 = 74811
+  - Flutter      = 53,907 + 1869 = 55776 + 2596 = 58372
+  - React Native = 74,224 + 587  = 74811 + 716  = 75527
 
 ## 启动
 

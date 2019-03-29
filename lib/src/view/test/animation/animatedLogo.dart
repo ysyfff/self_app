@@ -1,7 +1,15 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
+import '../../../../widget/description.dart';
 
 // void main() => runApp(LogoApp2());
+final description = """
+    # 1
+    djio
+    ##2
+    sd
+  """;
 
 // #docregion AnimatedLogo
 class AnimatedLogo extends AnimatedWidget {
@@ -12,13 +20,20 @@ class AnimatedLogo extends AnimatedWidget {
     final Animation<double> animation = listenable;
     return Scaffold(
         appBar: AppBar(title: Text('测试AnimatedWidget')),
-        body: Center(
-          child: Container(
-            margin: EdgeInsets.symmetric(vertical: 10),
-            height: animation.value,
-            width: animation.value,
-            child: FlutterLogo(),
-          ),
+        body: Column(
+          children: <Widget>[
+            Description(
+              desc: description,
+            ),
+            Center(
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 10),
+                height: animation.value,
+                width: animation.value,
+                child: FlutterLogo(),
+              ),
+            )
+          ],
         ));
   }
 }

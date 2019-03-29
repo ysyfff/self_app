@@ -2,6 +2,11 @@
  * RadioListTile只能用在Column中，不能用在Row中
  */
 import 'package:flutter/material.dart';
+import '../../../widget/description.dart';
+
+final description = '''
+  RadioListTile只能用在Column中，不能用在Row中
+''';
 
 class TestRadioListTile extends StatefulWidget {
   @override
@@ -25,6 +30,7 @@ class _State extends State<TestRadioListTile> {
         ),
         body: Column(
           children: <Widget>[
+            Description(desc: description,),
             RadioListTile<String>(
               title: const Text('eat'),
               value: 'eat',

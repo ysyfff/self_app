@@ -5,11 +5,20 @@ import '../../../../widget/description.dart';
 
 // void main() => runApp(LogoApp2());
 final description = """
-    # 1
-    djio
-    ##2
-    sd
-  """;
+通过AnimatedWidget来简化
+1. 使用AnimatedWidget而不是通过addListener和setState来触发动画
+2. AnimatedWidget列表
+AnimatedBuilder, 
+AnimatedModal­Barrier, 
+DecoratedBox­Transition, 
+FadeTransition, 
+Positioned­Transition, 
+Relative­Positioned­Transition, 
+RotationTransition, 
+ScaleTransition, 
+SizeTransition, 
+SlideTransition.
+""";
 
 // #docregion AnimatedLogo
 class AnimatedLogo extends AnimatedWidget {
@@ -32,7 +41,7 @@ class AnimatedLogo extends AnimatedWidget {
                 width: animation.value,
                 child: FlutterLogo(),
               ),
-            )
+            ),
           ],
         ));
   }

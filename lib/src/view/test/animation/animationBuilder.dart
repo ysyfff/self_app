@@ -1,7 +1,23 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
-
+import '../../../../widget/description.dart';
 // #docregion LogoWidget
+
+final description = '''
+使用AnimatedBuilder重构
+1. AnimatedBuilder知道如何渲染transition
+2. AnimatedBuilder不知道如何渲染widget也不知道如何管理animation
+3. AnimatedBuilder列表
+BottomSheet
+ExpansionTile, 
+PopupMenu, 
+ProgressIndicator,
+RefreshIndicator,
+Scaffold, SnackBar, 
+TabBar, 
+TextField.
+''';
+
 class LogoWidget extends StatelessWidget {
   // Leave out the height and width so it fills the animating parent
   Widget build(BuildContext context) => Container(
@@ -20,15 +36,23 @@ class GrowTransition extends StatelessWidget {
 
   Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(title: Text('使用AnimatedBuilder')),
-      body: Center(
-        child: AnimatedBuilder(
-            animation: animation,
-            builder: (context, child) => Container(
-                  height: animation.value,
-                  width: animation.value,
-                  child: child,
-                ),
-            child: child),
+      body: Column(
+        children: <Widget>[
+          Description(
+            desc: description,
+          ),
+          Center(
+            child: AnimatedBuilder(
+                animation: animation,
+                builder: (context, child) => Container(
+                      height: animation.value,
+                      width: animation.value,
+                      child: child,
+                    ),
+                child: child),
+          ),
+          
+        ],
       ));
 }
 // #enddocregion GrowTransition

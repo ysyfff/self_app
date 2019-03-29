@@ -1,7 +1,12 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
+import '../../../../widget/description.dart';
 
 // void main() => runApp(LogoApp2());
+final description = """
+监控动画过程
+1. 使用addStatusListener来监控中间状态, starting, stopping, reversing
+""";
 
 // #docregion AnimatedLogo
 class AnimatedLogo extends AnimatedWidget {
@@ -12,13 +17,18 @@ class AnimatedLogo extends AnimatedWidget {
     final Animation<double> animation = listenable;
     return Scaffold(
         appBar: AppBar(title: Text('测试addStatusListener')),
-        body: Center(
-          child: Container(
-            margin: EdgeInsets.symmetric(vertical: 10),
-            height: animation.value,
-            width: animation.value,
-            child: FlutterLogo(),
-          ),
+        body: Column(
+          children: <Widget>[
+            Description(desc: description,),
+            Center(
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 10),
+                height: animation.value,
+                width: animation.value,
+                child: FlutterLogo(),
+              ),
+            ),
+          ],
         ));
   }
 }
@@ -39,13 +49,13 @@ class _LogoAppState extends State<LogoApp3>
     controller =
         AnimationController(duration: const Duration(seconds: 1), vsync: this);
     animation = Tween<double>(begin: 10, end: 300).animate(controller)
-    ..addStatusListener((status){
-      if(status ==AnimationStatus.completed) {
-        controller.reverse();
-      }else if(status ==AnimationStatus.dismissed){
-        controller.forward();
-      }
-    });
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          controller.reverse();
+        } else if (status == AnimationStatus.dismissed) {
+          controller.forward();
+        }
+      });
     controller.forward();
   }
 

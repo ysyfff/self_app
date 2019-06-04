@@ -4,6 +4,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import '../../widget/radioTile.dart';
 
 enum SingingCharacter { lafayette, jefferson }
@@ -15,6 +17,8 @@ class WipeOut extends StatefulWidget {
 
 class WipeOutState extends State<WipeOut> {
   String _radioValue = 'eat';
+  Future<Post> post;
+
   var list = [];
   int _selectIndex = 1;
   final TextEditingController _controller = TextEditingController();
@@ -57,20 +61,17 @@ class WipeOutState extends State<WipeOut> {
       body: Column(
         children: <Widget>[_buildEnterForm()],
       ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   items: <BottomNavigationBarItem>[
-      //     BottomNavigationBarItem(
-      //         icon: Icon(Icons.money_off), title: Text('报销')),
-      //     BottomNavigationBarItem(
-      //         icon: Icon(Icons.my_location), title: Text('测试'))
-      //   ],
-      //   currentIndex: _selectIndex,
-      //   fixedColor: Colors.greenAccent,
-      //   onTap: _onItemTapped,
-      // ),
     );
   }
 
+  @override
+  initState(){
+    super.initState();
+    post = fetchPost();
+    print(post.toString());
+  }
+
+  // 创建表单
   Widget _buildEnterForm() {
     var textShown = list == null ? '' : list.join('\n');
     void _handleTypeChange(type) {
@@ -167,5 +168,33 @@ class WipeOutState extends State<WipeOut> {
         Text(textShown)
       ],
     );
+  }
+
+  //请求数据
+
+}
+
+class Post {
+  final dynamic money;
+  final String type;
+  final String date;
+
+  Post({this.type, this.date, this.money});
+
+  factory Post.fromJson(Map<String, dynamic> json) {
+    return Post(
+      type: json['type'],
+      date: json['date'],
+      money: json['money'],
+    );
+  }
+}
+
+Future<Post> fetchPost() async{
+  final response = await http.get('http://47.91.155.221:8081/api/wipeout/update');
+  if(response.statusCode == 200){
+    final result = json.decode(response.body);
+    print('请求的数据: $result');
+    return Post.fromJson(result);
   }
 }

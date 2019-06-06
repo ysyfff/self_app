@@ -78,7 +78,7 @@ class TestState extends State<Test> with SingleTickerProviderStateMixin {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext _) => MyApp(post: fetchPost())));
+                          builder: (BuildContext _) => MyApp2(post: fetchPost())));
                 },
                 child: Container(
                   padding: EdgeInsets.all(11),

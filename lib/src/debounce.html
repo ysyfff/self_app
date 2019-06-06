@@ -1,0 +1,89 @@
+<html>
+
+<head></head>
+
+<body>
+    <button onclick="handleClick2()">debounce</button>
+    <script>
+        function handleClick() {
+            console.log('gg')
+        }
+        let handleClick2 = debounce3(handleClick, 1500, { immediate: true, lastEmit: false });
+        function debounce3(func, wait, { immediate = true, lastEmit = false } = {}) {
+                let shouldExec = true; // 第一点击, shouldExec为true, 直到间隔时间大于wait的时候,再次被赋值为true
+                let lastCallTime;
+                let handler;
+
+                return function () {
+                    let time = new Date().getTime();
+                    let sinceLatCallTime;
+                    if (lastCallTime) {
+                        sinceLatCallTime = time - lastCallTime;
+                    } else {
+                        sinceLatCallTime = 0;
+                    }
+                    lastCallTime = time;
+                    if (shouldExec && immediate) {
+                        // console.log('立即')
+                        shouldExec = false;
+                        func.apply(this, arguments);
+                    }
+
+                    console.log(`${handler} ${sinceLatCallTime < wait} ${time} ${lastCallTime} ${sinceLatCallTime}`)
+                    if ((sinceLatCallTime < wait)) {
+                        clearTimeout(handler);
+                        handler = undefined;
+                    }
+
+
+                    handler = setTimeout(() => {
+                        if (lastEmit) {
+                            func.apply(this, arguments);
+                        }
+                        if (immediate) {
+
+                            shouldExec = true;
+                        }
+                    }, wait);
+                    console.log(handler, 'gg')
+                }
+            }
+        function debounce(func, wait, { immediate = true, lastEmit = false }) {
+            let shouldExec = true; // 第一点击, shouldExec为true, 直到间隔时间大于wait的时候,再次被赋值为true
+            let lastCallTime = null;
+            let lastExecTime = null;
+            let handler;
+
+            return function () {
+                let time = new Date().getTime();
+
+                console.log(time, lastCallTime, time - lastCallTime);
+                if (shouldExec && immediate) {
+                    console.log(immediate, time, lastCallTime, shouldExec, 'immediate');
+                    shouldExec = false;
+                    func.apply(this, arguments);
+                    lastExecTime = time;
+                }
+
+                if (handler && lastCallTime && (time - lastCallTime < wait)) {
+                    clearTimeout(handler);
+                    handler = undefined;
+                }
+
+                handler = setTimeout(() => {
+                    if (lastEmit) {
+                        func.apply(this, arguments);
+                    }
+                    if (immediate) {
+                        shouldExec = true;
+                    }
+                }, wait);
+
+                lastCallTime = time;
+
+            }
+        }
+    </script>
+</body>
+
+</html>

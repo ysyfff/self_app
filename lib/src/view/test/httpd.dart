@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 Future<Post> fetchPost() async {
   final response =
-      await http.get('http://47.91.155.221:8081/api/wipeout/update');
+      await http.get('http://47.91.155.221/api/wipeout/update');
 
   if (response.statusCode == 200) {
     // If the call to the server was successful, parse the JSON
@@ -36,10 +36,10 @@ class Post {
 
 // void main() => runApp(MyApp(post: fetchPost()));
 
-class MyApp extends StatelessWidget {
+class MyApp2 extends StatelessWidget {
   final Future<Post> post;
 
-  MyApp({Key key, this.post}) : super(key: key);
+  MyApp2({Key key, this.post}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

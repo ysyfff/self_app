@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'wipe_out.dart';
 import 'test/test.dart';
 import 'notebook.dart';
+import 'body_build.dart';
 
 class Index extends StatelessWidget {
   @override
@@ -32,6 +33,8 @@ class BottomNavigatorState extends State<BottomNavigator> {
       content = Notebook();
     } else if (index == 2) {
       content = Test();
+    } else if (index == 3) {
+      content = BodyBuild();
     }
     return content;
   }
@@ -53,6 +56,8 @@ class BottomNavigatorState extends State<BottomNavigator> {
           BottomNavigationBarItem(icon: Icon(Icons.book), title: Text('记事本')),
           BottomNavigationBarItem(
               icon: Icon(Icons.bug_report), title: Text('测试')),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.directions_run), title: Text('健身')),
         ],
         currentIndex: _selectIndex,
         // fixedColor: Theme.of(context).primaryColor,

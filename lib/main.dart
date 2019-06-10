@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'src/fonts/ysy_icons.dart';
-import 'src/view/index.dart';
+import 'src/view/view.dart';
 
 void main() => runApp(new MyApp());
 const mainColor = Color(0xfffd5b78);

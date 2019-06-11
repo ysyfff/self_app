@@ -37,3 +37,5 @@ flutter urn
 - 点击textinput以外的区域，keyboard dismiss
   - 在body上加gestureCaptuer配合FocusScope来实现
 - flutter动画
+- Flutter - AAPT: error: resource android:attr/dialogCornerRadius not found.
+  - 解决方法`https://www.cnblogs.com/hupo376787/p/10285910.html`

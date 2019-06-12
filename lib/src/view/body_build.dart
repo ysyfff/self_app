@@ -19,13 +19,23 @@ class BodyBuildState extends State<BodyBuild> {
   void initState() {
     super.initState();
     if (this._paths.length > 0) {
-      _videoPlayerController = VideoPlayerController.asset(this._paths[0]);
+      _videoPlayerController = VideoPlayerController.network(
+          'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4');
       _chewieController = ChewieController(
           videoPlayerController: _videoPlayerController,
           aspectRatio: 3 / 2,
           autoPlay: true,
           looping: true);
     }
+  }
+
+  void initVideo() {
+    _videoPlayerController = VideoPlayerController.asset(this._paths[0]);
+    _chewieController = ChewieController(
+        videoPlayerController: _videoPlayerController,
+        aspectRatio: 3 / 2,
+        autoPlay: true,
+        looping: true);
   }
 
   @override
@@ -36,7 +46,7 @@ class BodyBuildState extends State<BodyBuild> {
   }
 
   @override
-  build(BuildContext c) {
+  Widget build(BuildContext c) {
     return Scaffold(
       appBar: AppBar(
         title: Text('健身'),
@@ -53,7 +63,21 @@ class BodyBuildState extends State<BodyBuild> {
   }
 
   _buildBody() {
-    return Container(child: Text('健身走起'));
+    return Column(children: <Widget>[
+      Expanded(
+        child: Center(
+          child: Chewie(
+            controller: _chewieController,
+          ),
+        ),
+      ),
+      FlatButton(
+        onPressed: () {
+          _chewieController.enterFullScreen();
+        },
+        child: Text('Fullscreen'),
+      ),
+    ]);
   }
 
   _showDialog(c, content) {
@@ -76,6 +100,7 @@ class BodyBuildState extends State<BodyBuild> {
         _paths.add(_path);
         print(_paths.toString());
       }
+      initVideo();
     } on PlatformException catch (e) {
       print('Unsupported operation' + e.toString());
     }

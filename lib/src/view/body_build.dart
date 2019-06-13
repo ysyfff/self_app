@@ -1,9 +1,10 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:chewie/chewie.dart';
-import 'package:chewie/src/chewie_player.dart';
+// import 'package:chewie/chewie.dart';
+// import 'package:chewie/src/chewie_player.dart';
 import 'package:video_player/video_player.dart';
+import 'dart:io';
 
 class BodyBuild extends StatefulWidget {
   @override
@@ -12,36 +13,18 @@ class BodyBuild extends StatefulWidget {
 
 class BodyBuildState extends State<BodyBuild> {
   List<String> _paths = [];
-  VideoPlayerController _videoPlayerController;
-  ChewieController _chewieController;
+  VideoPlayerController _controller;
+  // ChewieController _chewieController;
+  var centerEle;
 
   @override
   void initState() {
     super.initState();
-    if (this._paths.length > 0) {
-      _videoPlayerController = VideoPlayerController.network(
-          'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4');
-      _chewieController = ChewieController(
-          videoPlayerController: _videoPlayerController,
-          aspectRatio: 3 / 2,
-          autoPlay: true,
-          looping: true);
-    }
-  }
-
-  void initVideo() {
-    _videoPlayerController = VideoPlayerController.asset(this._paths[0]);
-    _chewieController = ChewieController(
-        videoPlayerController: _videoPlayerController,
-        aspectRatio: 3 / 2,
-        autoPlay: true,
-        looping: true);
   }
 
   @override
   void dispose() {
-    _videoPlayerController.dispose();
-    _chewieController.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -66,15 +49,16 @@ class BodyBuildState extends State<BodyBuild> {
     return Column(children: <Widget>[
       Expanded(
         child: Center(
-          child: Chewie(
-            controller: _chewieController,
-          ),
+          child: _controller != null && _controller.value.initialized
+              ? AspectRatio(
+                  aspectRatio: _controller.value.aspectRatio,
+                  child: VideoPlayer(_controller),
+                )
+              : Container(),
         ),
       ),
       FlatButton(
-        onPressed: () {
-          _chewieController.enterFullScreen();
-        },
+        onPressed: () {},
         child: Text('Fullscreen'),
       ),
     ]);
@@ -94,13 +78,20 @@ class BodyBuildState extends State<BodyBuild> {
     String _path = '';
     try {
       _path = await FilePicker.getFilePath(type: FileType.VIDEO);
-      _showDialog(c, _path);
 
       if (_path != null) {
         _paths.add(_path);
         print(_paths.toString());
       }
-      initVideo();
+      if(_controller!=null){
+        _controller.dispose();
+      }
+      _controller = VideoPlayerController.file(new File(_path))
+        ..initialize().then((_) {
+          setState(() {
+            _controller.play();
+          });
+        });
     } on PlatformException catch (e) {
       print('Unsupported operation' + e.toString());
     }

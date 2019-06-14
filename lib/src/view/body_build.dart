@@ -1,7 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:chewie/chewie.dart';
+import 'package:chewie/chewie.dart';
 // import 'package:chewie/src/chewie_player.dart';
 import 'package:video_player/video_player.dart';
 import 'dart:io';
@@ -13,9 +13,10 @@ class BodyBuild extends StatefulWidget {
 
 class BodyBuildState extends State<BodyBuild> {
   List<String> _paths = [];
-  VideoPlayerController _controller;
-  // ChewieController _chewieController;
-  var centerEle;
+  bool showVideo = false;
+  VideoPlayerController _videoPlayerController;
+  ChewieController _chewieController;
+  var centerNode;
 
   @override
   void initState() {
@@ -24,7 +25,8 @@ class BodyBuildState extends State<BodyBuild> {
 
   @override
   void dispose() {
-    _controller.dispose();
+    _videoPlayerController.dispose();
+    _chewieController.dispose();
     super.dispose();
   }
 
@@ -46,19 +48,24 @@ class BodyBuildState extends State<BodyBuild> {
   }
 
   _buildBody() {
+    if (_chewieController != null) {
+      centerNode = Chewie(
+        controller: _chewieController,
+      );
+    } else {
+      centerNode = null;
+    }
+
     return Column(children: <Widget>[
       Expanded(
         child: Center(
-          child: _controller != null && _controller.value.initialized
-              ? AspectRatio(
-                  aspectRatio: _controller.value.aspectRatio,
-                  child: VideoPlayer(_controller),
-                )
-              : Container(),
+          child: centerNode,
         ),
       ),
       FlatButton(
-        onPressed: () {},
+        onPressed: () {
+          _chewieController.enterFullScreen();
+        },
         child: Text('Fullscreen'),
       ),
     ]);
@@ -83,15 +90,27 @@ class BodyBuildState extends State<BodyBuild> {
         _paths.add(_path);
         print(_paths.toString());
       }
-      if(_controller!=null){
-        _controller.dispose();
-      }
-      _controller = VideoPlayerController.file(new File(_path))
-        ..initialize().then((_) {
-          setState(() {
-            _controller.play();
-          });
-        });
+
+      setState(() {
+        if (_videoPlayerController != null) {
+          _videoPlayerController.dispose();
+        }
+        if (_chewieController != null) {
+          _chewieController.dispose();
+        }
+        
+        showVideo = true;
+
+        _videoPlayerController = VideoPlayerController.file(new File(_path));
+        _chewieController = ChewieController(
+          videoPlayerController: _videoPlayerController,
+          aspectRatio: 2 / 3,
+          autoPlay: true,
+          looping: true,
+        );
+
+        // initVideo();
+      });
     } on PlatformException catch (e) {
       print('Unsupported operation' + e.toString());
     }

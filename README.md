@@ -39,3 +39,5 @@ flutter urn
 - flutter动画
 - Flutter - AAPT: error: resource android:attr/dialogCornerRadius not found.
   - 解决方法`https://www.cnblogs.com/hupo376787/p/10285910.html`
+- Waiting for another flutter command to release the startup lock
+  - `rm ./flutter/bin/cache/lockfile`

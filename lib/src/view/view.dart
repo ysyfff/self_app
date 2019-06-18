@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'wipe_out.dart';
 import 'test/test.dart';
 import 'notebook.dart';
-import 'body_build.dart';
+import 'body_build/body_build.dart';
 
 class Index extends StatelessWidget {
   @override

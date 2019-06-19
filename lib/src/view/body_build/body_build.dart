@@ -1,11 +1,6 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:chewie/chewie.dart';
-// import 'package:chewie/src/chewie_player.dart';
-import 'package:video_player/video_player.dart';
-import 'dart:io';
-import 'dart:math';
 import 'play_video.dart';
 
 class BodyBuild extends StatefulWidget {
@@ -34,7 +29,7 @@ class BodyBuildState extends State<BodyBuild> {
     );
   }
 
-  _buildBody(BuildContext app_c) {
+  _buildBody(BuildContext appC) {
     return _paths.length > 0
         ? ListView.builder(
             padding: const EdgeInsets.all(8.0),
@@ -56,7 +51,7 @@ class BodyBuildState extends State<BodyBuild> {
                       transform: Matrix4.rotationZ(0.01),
                     ),
                     onTap: () {
-                      _palyVideo(app_c, _paths[2 * index]);
+                      _palyVideo(appC, _paths[2 * index]);
                     },
                   ),
                   GestureDetector(
@@ -74,7 +69,7 @@ class BodyBuildState extends State<BodyBuild> {
                                   : ''))
                           : Text(''),
                       onTap: () {
-                        _palyVideo(app_c, _paths[2 * index + 1]);
+                        _palyVideo(appC, _paths[2 * index + 1]);
                       })
                 ],
               );

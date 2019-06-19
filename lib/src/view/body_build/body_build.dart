@@ -63,34 +63,28 @@ class BodyBuildState extends State<BodyBuild> {
             itemBuilder: (BuildContext c, int index) {
               return Row(children: <Widget>[
                 Container(
+                  color: Colors.blue,
                   height: 80,
-                  padding: EdgeInsets.only(left: 10, right: 10),
+                  margin: EdgeInsets.only(top: 10),
+                  padding: EdgeInsets.only(left: 10, right: 10, top: 5),
                   width: 180,
-                  child:Text(_paths[2* index])),
-                Container(
+                  child:Text(_paths[2* index]),
+                  transform: Matrix4.rotationZ(0.01),
+                  ),
+                2*index + 1 < _paths.length ? Container(
                   height: 80,
-                  padding: EdgeInsets.only(left: 10, right: 10),
+                  color: Colors.blue,
+                  margin: EdgeInsets.only(top: 10, left: 10),
+                  padding: EdgeInsets.only(left: 10, right: 10, top: 5),
                   width: 180,
-                  child: Text(2*index + 1 < _paths.length  ?_paths[2*index+1] : ''))
+                  transform: Matrix4.rotationZ(0.01),
+                  child: Text(2*index + 1 < _paths.length  ?_paths[2*index+1] : '')): Text('')
               ],);
             },
           )
         : Center(
             child: Text('空空如也'),
           );
-    // return Column(children: <Widget>[
-    //   Expanded(
-    //     child: Center(
-    //       child: centerNode,
-    //     ),
-    //   ),
-    //   FlatButton(
-    //     onPressed: () {
-    //       _chewieController.enterFullScreen();
-    //     },
-    //     child: Text('Fullscreen'),
-    //   ),
-    // ]);
   }
 
   _showDialog(c, content) {

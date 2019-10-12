@@ -11,22 +11,24 @@ A few resources to get you started if this is your first Flutter project:
 - [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
+For help getting started with Flutter, view our
+[online documentation](https://flutter.io/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
 ## Star对比
+
 - Star
-  - Flutter      = 53,907 + 1869 = 55776 + 2596 = 58372 + 16740 = 75112
-  - React Native = 74,224 + 587  = 74811 + 716  = 75527 + 5457  = 80984
+  - Flutter      = 53,907 + 1869 = 55776 + 2596 = 58372 + 16740 = 75112 + 1805 = 76917
+  - diff          + 20317         + 19035         + 17155        + 5872         + 4816
+  - React Native = 74,224 + 587  = 74811 + 716  = 75527 + 5457  = 80984 + 749  = 81733
 
 ## 启动
 
-```
+``` dart
 flutter urn
 ```
 
-# self_app
+## self_app
 
 ## 知识点
 
@@ -40,4 +42,7 @@ flutter urn
 - Flutter - AAPT: error: resource android:attr/dialogCornerRadius not found.
   - 解决方法`https://www.cnblogs.com/hupo376787/p/10285910.html`
 - Waiting for another flutter command to release the startup lock
-  - `rm ./flutter/bin/cache/lockfile`
+  - `rm ~/./flutter/bin/cache/lockfile`
+- 安装到手机命令
+  - flutter build apk
+  - flutter install

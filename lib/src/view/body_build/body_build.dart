@@ -96,10 +96,8 @@ class BodyBuildState extends State<BodyBuild> {
   _getPaths() async {
     final prefs = await SharedPreferences.getInstance();
     List<String> paths = prefs.getStringList('paths');
-    print(paths.toString());
-    print('gg');
 
-    if (_paths != null) {
+    if (paths != null) {
       setState(() {
         _paths = paths;
       });

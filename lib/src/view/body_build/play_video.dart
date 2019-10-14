@@ -11,14 +11,14 @@ class PlayVideo extends StatefulWidget {
   PlayVideo({this.path}) : super();
   // PlayVideo({Key: key, this.path}) : super(key: key);
   @override
-  PlayVideoS createState() => new PlayVideoS(path: path);
+  PlayVideoState createState() => new PlayVideoState(path: path);
 }
 
-class PlayVideoS extends State<PlayVideo> {
+class PlayVideoState extends State<PlayVideo> {
   String path;
-  PlayVideoS({this.path}) : super();
-  // PlayVideoS({Key key, this.path}) : super();
-  // PlayVideoS({this.path}) : super();
+  PlayVideoState({this.path}) : super();
+  // PlayVideoState({Key key, this.path}) : super();
+  // PlayVideoState({this.path}) : super();
   var centerNode;
   VideoPlayerController _videoPlayerController;
   ChewieController _chewieController;

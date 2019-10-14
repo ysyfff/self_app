@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'play_video.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:chewie/chewie.dart';
+import 'package:video_player/video_player.dart';
+import 'dart:io';
 
 class BodyBuild extends StatefulWidget {
   @override
@@ -37,10 +40,11 @@ class BodyBuildState extends State<BodyBuild> {
   }
 
   _buildBody(BuildContext appC) {
-    return _paths.length > 0
+    final showPaths = _paths;
+    return showPaths.length > 0
         ? ListView.builder(
             padding: const EdgeInsets.all(8.0),
-            itemCount: (_paths.length / 2).ceil(),
+            itemCount: (showPaths.length / 2).ceil(),
             itemBuilder: (BuildContext c, int index) {
               return Row(
                 children: <Widget>[
@@ -52,17 +56,17 @@ class BodyBuildState extends State<BodyBuild> {
                       margin: EdgeInsets.only(top: 10),
                       padding: EdgeInsets.only(left: 10, right: 10, top: 5),
                       width: 180,
-                      child: Text(
-                        _paths[2 * index],
+                      child: _createVideoNode(
+                        showPaths[2 * index],
                       ),
                       transform: Matrix4.rotationZ(0.01),
                     ),
                     onTap: () {
-                      _palyVideo(appC, _paths[2 * index]);
+                      _palyVideo(appC, showPaths[2 * index]);
                     },
                   ),
                   GestureDetector(
-                      child: 2 * index + 1 < _paths.length
+                      child: 2 * index + 1 < showPaths.length
                           ? Container(
                               height: 80,
                               color: Colors.blue,
@@ -71,12 +75,13 @@ class BodyBuildState extends State<BodyBuild> {
                                   EdgeInsets.only(left: 10, right: 10, top: 5),
                               width: 180,
                               transform: Matrix4.rotationZ(0.01),
-                              child: Text(2 * index + 1 < _paths.length
-                                  ? _paths[2 * index + 1]
-                                  : ''))
+                              child: _createVideoNode(
+                                  2 * index + 1 < showPaths.length
+                                      ? showPaths[2 * index + 1]
+                                      : ''))
                           : Text(''),
                       onTap: () {
-                        _palyVideo(appC, _paths[2 * index + 1]);
+                        _palyVideo(appC, showPaths[2 * index + 1]);
                       })
                 ],
               );
@@ -101,21 +106,39 @@ class BodyBuildState extends State<BodyBuild> {
     }
   }
 
+  _createVideoNode(String path) {
+    if(path == '') {
+      return null;
+    }
+
+    VideoPlayerController _videoPlayerController;
+    ChewieController _chewieController;
+
+    _videoPlayerController = VideoPlayerController.file(new File(path));
+    _chewieController = ChewieController(
+      videoPlayerController: _videoPlayerController,
+      aspectRatio: 3 / 2,
+      autoPlay: false,
+      looping: false,
+    );
+
+    var node;
+    if (_chewieController != null) {
+      node = Chewie(
+        controller: _chewieController,
+      );
+    } else {
+      node = null;
+    }
+
+    return node;
+  }
+
   _palyVideo(c, path) {
     Navigator.push(
         c,
         MaterialPageRoute(
             builder: (BuildContext _) => new PlayVideo(path: path)));
-  }
-
-  _showDialog(c, content) {
-    showDialog(
-        context: c,
-        builder: (BuildContext _c) {
-          return AlertDialog(
-            title: Text(content),
-          );
-        });
   }
 
   void _addVideo(c) async {

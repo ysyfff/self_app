@@ -2,6 +2,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'play_video.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BodyBuild extends StatefulWidget {
   @override
@@ -11,6 +12,12 @@ class BodyBuild extends StatefulWidget {
 class BodyBuildState extends State<BodyBuild> {
   List<String> _paths = [];
   bool showVideo = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _getPaths();
+  }
 
   @override
   Widget build(BuildContext c) {
@@ -80,9 +87,25 @@ class BodyBuildState extends State<BodyBuild> {
           );
   }
 
+  // 获取本地缓存的paths
+  _getPaths() async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String> paths = prefs.getStringList('paths');
+    print(paths.toString());
+    print('gg');
+
+    if (_paths != null) {
+      setState(() {
+        _paths = paths;
+      });
+    }
+  }
+
   _palyVideo(c, path) {
     Navigator.push(
-        c, MaterialPageRoute(builder: (BuildContext _) => new PlayVideo(path: path)));
+        c,
+        MaterialPageRoute(
+            builder: (BuildContext _) => new PlayVideo(path: path)));
   }
 
   _showDialog(c, content) {
@@ -101,10 +124,11 @@ class BodyBuildState extends State<BodyBuild> {
       _path = await FilePicker.getFilePath(type: FileType.VIDEO);
 
       if (_path != null) {
+        final prefs = await SharedPreferences.getInstance();
         setState(() {
           _paths.add(_path);
+          prefs.setStringList('paths', _paths);
         });
-        // print(_paths.toString());
       }
     } on PlatformException catch (e) {
       print('Unsupported operation' + e.toString());

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'play_video.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
 import 'dart:io';
 
@@ -104,30 +103,28 @@ class BodyBuildState extends State<BodyBuild> {
     }
   }
 
+  _autoPlay(VideoPlayerController controller) async {
+    if (!controller.value.initialized) {
+      await controller.initialize();
+    }
+    await controller.play();
+  }
+
   _createVideoNode(String path) {
-    if(path == '') {
+    if (path == '') {
       return null;
     }
 
-    VideoPlayerController _videoPlayerController;
-    ChewieController _chewieController;
+    VideoPlayerController _controller;
 
-    _videoPlayerController = VideoPlayerController.file(new File(path));
-    _chewieController = ChewieController(
-      videoPlayerController: _videoPlayerController,
-      aspectRatio: 3 / 2,
-      autoPlay: false,
-      looping: false,
-    );
-
-    var node;
-    if (_chewieController != null) {
-      node = Chewie(
-        controller: _chewieController,
-      );
-    } else {
-      node = null;
-    }
+    _controller = VideoPlayerController.file(new File(path));
+    _autoPlay(_controller);
+    final node = _controller.value.initialized
+        ? AspectRatio(
+            aspectRatio: _controller.value.aspectRatio,
+            child: VideoPlayer(_controller),
+          )
+        : Container();
 
     return node;
   }

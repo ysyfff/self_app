@@ -2,6 +2,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'play_video.dart';
+import 'play_video_pure.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
@@ -14,6 +15,7 @@ class BodyBuild extends StatefulWidget {
 
 class BodyBuildState extends State<BodyBuild> {
   List<String> _paths = [];
+  List<ChewieController> controllerList = [];
   bool showVideo = false;
 
   @override
@@ -51,13 +53,13 @@ class BodyBuildState extends State<BodyBuild> {
                   GestureDetector(
                     child: Container(
                       color: Colors.blue,
-                      height: 80,
+                      height: 120,
                       alignment: Alignment.center,
                       margin: EdgeInsets.only(top: 10),
                       padding: EdgeInsets.only(left: 10, right: 10, top: 5),
                       width: 180,
-                      child: _createVideoNode(
-                        showPaths[2 * index],
+                      child: new PlayVideoPure(
+                        path: showPaths[2 * index],
                       ),
                       transform: Matrix4.rotationZ(0.01),
                     ),
@@ -68,15 +70,15 @@ class BodyBuildState extends State<BodyBuild> {
                   GestureDetector(
                       child: 2 * index + 1 < showPaths.length
                           ? Container(
-                              height: 80,
+                              height: 120,
                               color: Colors.blue,
                               margin: EdgeInsets.only(top: 10, left: 10),
                               padding:
                                   EdgeInsets.only(left: 10, right: 10, top: 5),
                               width: 180,
                               transform: Matrix4.rotationZ(0.01),
-                              child: _createVideoNode(
-                                  2 * index + 1 < showPaths.length
+                              child: new PlayVideoPure(
+                                  path: 2 * index + 1 < showPaths.length
                                       ? showPaths[2 * index + 1]
                                       : ''))
                           : Text(''),
@@ -104,33 +106,6 @@ class BodyBuildState extends State<BodyBuild> {
     }
   }
 
-  _createVideoNode(String path) {
-    if(path == '') {
-      return null;
-    }
-
-    VideoPlayerController _videoPlayerController;
-    ChewieController _chewieController;
-
-    _videoPlayerController = VideoPlayerController.file(new File(path));
-    _chewieController = ChewieController(
-      videoPlayerController: _videoPlayerController,
-      aspectRatio: 3 / 2,
-      autoPlay: false,
-      looping: false,
-    );
-
-    var node;
-    if (_chewieController != null) {
-      node = Chewie(
-        controller: _chewieController,
-      );
-    } else {
-      node = null;
-    }
-
-    return node;
-  }
 
   _palyVideo(c, path) {
     Navigator.push(

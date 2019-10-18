@@ -46,3 +46,5 @@ flutter urn
 - 安装到手机命令
   - flutter build apk
   - flutter install
+- 手机调试
+  - flutter run
